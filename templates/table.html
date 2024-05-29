@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Asignación y Transporte</title>
+</head>
+<body>
+    <h1>Asignación y Transporte</h1>
+    
+    <form action="/solver" method="POST">
+        <input type="hidden" id="N" name="N" value="{{ rows }}">
+        <input type="hidden" id="M" name="M" value="{{ cols }}">
+        <!--Tabla de costos-->
+        <table border="1">
+            <!-- Encabezado de columnas -->
+            <tr>
+                <th></th>
+                {% for j in range(cols) %}
+                    <th>Destino {{ j+1 }}</th>
+                {% endfor %}
+            </tr>
+            <!-- Filas de inputs -->
+            {% for i in range(rows) %}
+                <tr>
+                    <th>Origen {{ i+1 }}</th>
+                    {% for j in range(cols) %}
+                        <td>
+                            <input type="number" name="cell_{{i}}_{{j}}">
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+        <br><br>
+
+        <!--Tabla de recursos y demanda-->
+        <table border="1">
+            <!-- Encabezado de columnas -->
+            <tr>
+                <th></th>
+                {% for j in range(cols) %}
+                    <th>Destino {{ j+1 }}</th>
+                {% endfor %}
+                <th>Oferta</th>
+            </tr>
+            <!-- Filas de inputs -->
+            {% for i in range(rows) %}
+                <tr>
+                    <th>Origen {{ i+1 }}</th>
+                    {% for j in range(cols) %}
+                        <td>
+                            <input type="number" name="cells_{{i}}_{{j}}" disabled>
+                        </td>
+                    {% endfor %}
+                    <td>
+                        <input type="number" name="offer_{{i}}">
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th>Demanda</th>
+                {% for j in range(cols) %}
+                    <td>
+                        <input type="number" name="demand_{{j}}">
+                    </td>
+                {% endfor %}
+                <td></td>
+            </tr>
+        </table>
+        <input type="submit" value="Enviar valores">
+    </form>
+    <br>
+    <br>
+    <!--Mostrar resultado final-->
+    {% if total is defined %}
+    <h2>Resultado Total: {{ '{:,.2f}'.format(total) }}</h2>
+    {% endif %}
+
+    <a href="/">Volver</a>
+</body>
+</html>
